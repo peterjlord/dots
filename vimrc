@@ -1,5 +1,4 @@
-" ---------------------- USABILITY CONFIGURATION ----------------------
-"  Basic and pretty much needed settings to provide a solid base for
+
 "  source code editting
 
 " don't make vim compatible with vi 
@@ -8,7 +7,7 @@ set nocompatible
 " turn on syntax highlighting
 syntax on
 " and show line numbers
-set number
+set nonumber
 
 " make vim try to detect file types and load plugins for them
 filetype on
