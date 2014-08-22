@@ -1,14 +1,6 @@
-
-"  source code editting
-
-" don't make vim compatible with vi 
 set nocompatible
-
-" turn on syntax highlighting
 syntax on
-" and show line numbers
 set nonumber
-
 " make vim try to detect file types and load plugins for them
 filetype on
 filetype plugin on
@@ -67,23 +59,21 @@ exe 'ino <script> <C-V>' paste#paste_cmd['i']
 " save with ctrl+s
 nmap <c-s> :w<CR>
 imap <c-s> <Esc>:w<CR>a
-
 " hide unnecessary gui in gVim
 if has("gui_running")
-    set guioptions-=m  " remove menu bar
-    set guioptions-=T  " remove toolbar
-    set guioptions-=r  " remove right-hand scroll bar
-    set guioptions-=L  " remove left-hand scroll bar
+	set guioptions-=m  " remove menu bar
+  set guioptions-=T  " remove toolbar
+  set guioptions-=r  " remove right-hand scroll bar
+  set guioptions-=L  " remove left-hand scroll bar
 end
+
 " set Adobe's Source Code Pro font as default
 set guifont=Source\ Code\ Pro
-
 " allow Tab and Shift+Tab to
 " tab  selection in visual mode
 vmap <Tab> >gv
 vmap <S-Tab> <gv 
 
-" remove the .ext~ files, but not the swapfiles
 set nobackup
 set writebackup
 set noswapfile
@@ -91,8 +81,6 @@ set noswapfile
 " search settings
 set incsearch        " find the next match as we type the search
 set hlsearch         " hilight searches by default
-" use ESC to remove search higlight
-nnoremap <esc> :noh<return><esc>
 
 " most of the time I should use ` instead of ' but typing it with my keyabord
 " is a pain, so just toggle them
@@ -104,6 +92,7 @@ set wildmode=list:longest
 
 " keep the cursor visible within 3 lines when scrolling
 set scrolloff=3
+
 " indentation
 set expandtab       " use spaces instead of tabs
 set autoindent      " autoindent based on line above, works most of the time
@@ -132,8 +121,7 @@ autocmd BufNewFile,BufRead *.jade setlocal ft=jade
 
 " when pasting over SSH it's a pain to type :set paste and :set nopaste
 " just map it to <f9>
-set pastetoggle=<f12>
-
+set pastetoggle=<f9>
 " if windows...
 if has('win32')
     " start maximized
@@ -144,3 +132,49 @@ if has('win32')
     let &runtimepath.=',$HOME/.vim'
 endif
 
+" ---------------------- PLUGIN CONFIGURATION ----------------------
+" initiate Vundle
+let &runtimepath.=',$HOME/.vim/bundle/Vundle.vim'
+call vundle#begin()
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" start plugin defintion
+Plugin 'scrooloose/nerdtree'
+Plugin 'vim-scripts/L9'
+Plugin 'vim-scripts/FuzzyFinder'
+Plugin 'itchyny/lightline.vim'      
+Plugin 'Lokaltog/vim-easymotion'    
+Plugin 'tpope/vim-surround'         
+" -- Web Development
+Plugin 'Shutnik/jshint2.vim'        
+Plugin 'mattn/emmet-vim'            
+Plugin 'kchmck/vim-coffee-script'   
+Plugin 'groenewege/vim-less'        
+Plugin 'skammer/vim-css-color'      
+Plugin 'hail2u/vim-css3-syntax'     
+Plugin 'digitaltoad/vim-jade'       
+
+" end plugin definition
+call vundle#end()            " required for vundle
+" start NERDTree on start-up and focus active window
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
+
+" map FuzzyFinder
+noremap <leader>b :FufBuffer<cr>
+noremap <leader>f :FufFile<cr>
+
+" use zencoding with <C-E>
+let g:user_emmet_leader_key = '<c-e>'
+
+" run JSHint when a file with .js extension is saved
+" this requires the jsHint2 plugin
+autocmd BufWritePost *.js silent :JSHint
+
+" set the color theme to wombat256
+colorscheme wombat256
+" make a mark for column 80
+set colorcolumn=80
+" and set the mark color to DarkSlateGray
+highlight ColorColumn ctermbg=lightgray guibg=lightgray
