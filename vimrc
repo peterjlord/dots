@@ -1,58 +1,147 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'L9'
-Plugin 'git://git.wincent.com/command-t.git'
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-Plugin 'user/L9', {'name': 'newL9'}
-call vundle#end()            " required
-filetype plugin indent on    " required
+" ---------------------- USABILITY CONFIGURATION ----------------------
+"  Basic and pretty much needed settings to provide a solid base for
+"  source code editting
 
-" Allows you to have multiple buffers open
-set hidden
-" Lines of code will not wrap to the next line
-set nowrap
-" Make backspace behave like other editors
+" don't make vim compatible with vi 
+set nocompatible
+
+" turn on syntax highlighting
+syntax on
+" and show line numbers
+set number
+
+" make vim try to detect file types and load plugins for them
+filetype on
+filetype plugin on
+filetype indent on
+
+" reload files changed outside vim
+set autoread         
+
+" encoding is utf 8
+set encoding=utf-8
+set fileencoding=utf-8
+
+" enable matchit plugin which ships with vim and greatly enhances '%'
+runtime macros/matchit.vim
+
+" by default, in insert mode backspace won't delete over line breaks, or 
+" automatically-inserted indentation, let's change that
 set backspace=indent,eol,start
-" Automatically indent on new lines
-set autoindent
-" Copy the indentation of the previous line if auto indent doesn't know what to do
-set copyindent
-" Indenting a line with >> or << will indent or un-indent by 4
-set shiftwidth=2
-" Pressing tab in insert mode will use 4 spaces
-set softtabstop=2
-" Use spaces instead of tabs
-set expandtab
-" Highlight matching braces/tags
-set showmatch
-" Ignore case when searching
-set ignorecase
-" ...unless there's a capital letter in the query
-set smartcase
-" Indent to correct location with tab
-set smarttab
-" Highlight search matches
-set hlsearch
-" Search while you enter the query, not after
-set incsearch
-" More undos
-set undolevels=1000
-" Vim can set the title of the terminal window
-set title
-" Use a visual indicator instead of a beep
-set visualbell
-" Or just turn error bells off with this
-set noerrorbells
-" Enable syntax highlighting
-syntax enable
-" Tell vim that your terminal supports 256 colors
-set t_Co=256
-" Toggle paste mode with F2
-set pastetoggle=<F12>
-" Use ; instead of : to enter commands, saves a lot of keystrokes in the long run
-nnoremap ; :
+
+" dont't unload buffers when they are abandoned, instead stay in the
+" background
+set hidden
+
+" set unix line endings
+set fileformat=unix
+" when reading files try unix line endings then dos, also use unix for new
+" buffers
+set fileformats=unix,dos
+" save up to 100 marks, enable capital marks
+set viminfo='100,f1
+
+" screen will not be redrawn while running macros, registers or other
+" non-typed comments
+set lazyredraw
+
+" ---------------------- CUSTOMIZATION ----------------------
+"  The following are some extra mappings/configs to enhance my personal
+"  VIM experience
+
+" set , as mapleader
+let mapleader = ","
+
+" map <leader-q> and <leader-w> to previous and next buffer
+map <leader>q :bp<CR>
+map <leader>w :bn<CR>
+
+" windows like clipboard
+" yank to and paste from the clipboard without prepending "* to commands
+let &clipboard = has('unnamedplus') ? 'unnamedplus' : 'unnamed'
+" map c-x and c-v to work as they do in windows, only in insert mode
+vm <c-x> "+x
+vm <c-c> "+y
+cno <c-v> <c-r>+
+exe 'ino <script> <C-V>' paste#paste_cmd['i']
+
+" save with ctrl+s
+nmap <c-s> :w<CR>
+imap <c-s> <Esc>:w<CR>a
+
+" hide unnecessary gui in gVim
+if has("gui_running")
+    set guioptions-=m  " remove menu bar
+    set guioptions-=T  " remove toolbar
+    set guioptions-=r  " remove right-hand scroll bar
+    set guioptions-=L  " remove left-hand scroll bar
+end
+" set Adobe's Source Code Pro font as default
+set guifont=Source\ Code\ Pro
+
+" allow Tab and Shift+Tab to
+" tab  selection in visual mode
+vmap <Tab> >gv
+vmap <S-Tab> <gv 
+
+" remove the .ext~ files, but not the swapfiles
+set nobackup
+set writebackup
+set noswapfile
+
+" search settings
+set incsearch        " find the next match as we type the search
+set hlsearch         " hilight searches by default
+" use ESC to remove search higlight
+nnoremap <esc> :noh<return><esc>
+
+" most of the time I should use ` instead of ' but typing it with my keyabord
+" is a pain, so just toggle them
+nnoremap ' `
+nnoremap ` '
+
+" suggestion for normal mode commands
+set wildmode=list:longest
+
+" keep the cursor visible within 3 lines when scrolling
+set scrolloff=3
+" indentation
+set expandtab       " use spaces instead of tabs
+set autoindent      " autoindent based on line above, works most of the time
+set smartindent     " smarter indent for C-like languages
+set shiftwidth=4    " when reading, tabs are 4 spaces
+set softtabstop=4   " in insert mode, tabs are 4 spaces
+
+" no lines longer than 80 cols
+set textwidth=80
+
+" use <C-Space> for Vim's keyword autocomplete
+"  ...in the terminal
+inoremap <Nul> <C-n>
+"  ...and in gui mode
+inoremap <C-Space> <C-n>
+
+" On file types...
+"   .md files are markdown files
+autocmd BufNewFile,BufRead *.md setlocal ft=markdown
+"   .twig files use html syntax
+autocmd BufNewFile,BufRead *.twig setlocal ft=html
+"   .less files use less syntax
+autocmd BufNewFile,BufRead *.less setlocal ft=less
+"   .jade files use jade syntax
+autocmd BufNewFile,BufRead *.jade setlocal ft=jade
+
+" when pasting over SSH it's a pain to type :set paste and :set nopaste
+" just map it to <f9>
+set pastetoggle=<f12>
+
+" if windows...
+if has('win32')
+    " start maximized
+    autocmd GUIEnter * simalt ~x
+    " also use .vim instead of vimfiles, make sure to run the following command
+    " once this was copied to /Users/<user>/.vim
+    "  mklink %homepath%/.vimrc %homepath%/.vim/.vimrc
+    let &runtimepath.=',$HOME/.vim'
+endif
 
