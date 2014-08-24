@@ -155,11 +155,18 @@ Plugin 'skammer/vim-css-color'
 Plugin 'hail2u/vim-css3-syntax'     
 Plugin 'digitaltoad/vim-jade'       
 
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
+
+  " Optional:
+Bundle "honza/vim-snippets"
+
 " end plugin definition
 call vundle#end()            " required for vundle
 " start NERDTree on start-up and focus active window
-autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd p
+"autocmd VimEnter * NERDTree
+"autocmd VimEnter * wincmd p
 
 " map FuzzyFinder
 noremap <leader>b :FufBuffer<cr>
@@ -173,8 +180,7 @@ let g:user_emmet_leader_key = '<c-e>'
 autocmd BufWritePost *.js silent :JSHint
 
 " set the color theme to wombat256
-colorscheme wombat256
 " make a mark for column 80
-set colorcolumn=80
+"set colorcolumn=80
 " and set the mark color to DarkSlateGray
 highlight ColorColumn ctermbg=lightgray guibg=lightgray
