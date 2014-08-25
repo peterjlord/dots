@@ -174,6 +174,7 @@ noremap <leader>f :FufFile<cr>
 
 " use zencoding with <C-E>
 let g:user_emmet_leader_key = '<c-e>'
+let g:netrw_liststyle=3
 
 " run JSHint when a file with .js extension is saved
 " this requires the jsHint2 plugin

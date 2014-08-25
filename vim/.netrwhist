@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/home/munros7/dots'
+let g:netrw_dirhist_2='/home/munros7/dots/vim'
+let g:netrw_dirhist_3='/home/munros7/dots/vim/bundle'
+let g:netrw_dirhist_4='/home/munros7/dots'
