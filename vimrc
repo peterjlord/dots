@@ -97,8 +97,9 @@ set scrolloff=3
 set expandtab       " use spaces instead of tabs
 set autoindent      " autoindent based on line above, works most of the time
 set smartindent     " smarter indent for C-like languages
-set shiftwidth=4    " when reading, tabs are 4 spaces
-set softtabstop=4   " in insert mode, tabs are 4 spaces
+set shiftwidth=2    " when reading, tabs are 4 spaces
+set softtabstop=2   " in insert mode, tabs are 4 spaces
+set tabstop=2   " in insert mode, tabs are 4 spaces
 
 " no lines longer than 80 cols
 set textwidth=80
@@ -158,6 +159,7 @@ Plugin 'digitaltoad/vim-jade'
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
+Bundle "Raimondi/delimitMate"
 
   " Optional:
 Bundle "honza/vim-snippets"
