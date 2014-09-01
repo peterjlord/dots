@@ -1,5 +1,19 @@
 set nocompatible
+if has("autocmd")
+  " Drupal *.module and *.install files.
+  augroup module
+    autocmd BufRead,BufNewFile *.module set filetype=php
+    autocmd BufRead,BufNewFile *.engine set filetype=php
+    autocmd BufRead,BufNewFile *.install set filetype=php
+    autocmd BufRead,BufNewFile *.test set filetype=php
+    autocmd BufRead,BufNewFile *.inc set filetype=php
+    autocmd BufRead,BufNewFile *.profile set filetype=php
+    autocmd BufRead,BufNewFile *.view set filetype=php
+  augroup END
+endif
 syntax on
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+au FileType php set omnifunc=phpcomplete#CompletePHP
 set nonumber
 " make vim try to detect file types and load plugins for them
 filetype on
@@ -51,8 +65,8 @@ map <leader>w :bn<CR>
 " yank to and paste from the clipboard without prepending "* to commands
 let &clipboard = has('unnamedplus') ? 'unnamedplus' : 'unnamed'
 " map c-x and c-v to work as they do in windows, only in insert mode
-vm <c-x> "+x
-vm <c-c> "+y
+"vm <c-x> "+x
+"vm <c-c> "+y
 cno <c-v> <c-r>+
 exe 'ino <script> <C-V>' paste#paste_cmd['i']
 
@@ -163,6 +177,7 @@ Bundle "Raimondi/delimitMate"
 
   " Optional:
 Bundle "honza/vim-snippets"
+Bundle 'shawncplus/phpcomplete.vim'
 
 " end plugin definition
 call vundle#end()            " required for vundle
